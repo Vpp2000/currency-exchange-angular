@@ -10,6 +10,11 @@ export class TokenService {
     return this.parseJwt(tokenEncoded);
   }
 
+  getTokenEncoded(): string {
+    const tokenEncoded: string = localStorage.getItem('token') as string;
+    return tokenEncoded;
+  }
+
   setToken(tokenEncoded: string) {
     localStorage.setItem('token', tokenEncoded);
     const tokenDecoded = this.parseJwt(tokenEncoded);

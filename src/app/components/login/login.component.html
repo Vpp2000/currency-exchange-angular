@@ -7,33 +7,25 @@
       <span class="text-600 font-medium line-height-3">Don't have an account?</span>
       <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" routerLink="../register">Create today!</a>
     </div>
-  <form>
+  <form [formGroup]="fg">
     <div>
       <label for="email1" class="block text-900 font-medium mb-2">Username</label>
-      <input id="email1" type="text" placeholder="Username" pInputText class="w-full mb-3">
-
+      <input id="email1" formControlName="username" type="text" placeholder="Username" pInputText class="w-full mb-3">
+      <div *ngIf="fg.get('username')!.errors?.['minlength']">
+        <small class="p-error">La longitud minima es 3.</small>
+      </div>
       <label for="password1" class="block text-900 font-medium mb-2">Password</label>
-      <input id="password1" type="password" placeholder="Password" pInputText class="w-full mb-3">
+      <input id="password1" formControlName="password" type="password" placeholder="Password" pInputText class="w-full mb-3">
+      <div *ngIf="fg.get('password')!.errors?.['minlength']">
+        <small class="p-error">La longitud minima es 3.</small>
+      </div>
 
-      <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+      <p-button styleClass="w-full" label="Sign In" [loading]="loading" (click)="onSubmit()" [disabled]="fg.invalid"></p-button>
+
     </div>
   </form>
   </div>
 </div>
 
 
-<p-dialog
-  [(visible)]="loading"
-  [modal]="true"
-  [style]="{ width: '18vw' }"
-  [closeOnEscape]="false"
-  [closable]="false"
->
-  <div *ngIf="loading" class="flex flex-column" style="flex: 1">
-    <div class="text-center">
-      <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
-      <h4 class="text-success">Ingresando..</h4>
-      <span>Espere se esta validando su cuenta</span>
-    </div>
-  </div>
-</p-dialog>
+

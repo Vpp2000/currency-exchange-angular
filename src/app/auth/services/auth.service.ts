@@ -13,8 +13,6 @@ export class AuthService {
 
   loginSuccess(token: string) {
     this.tokenService.setToken(token);
-    localStorage.setItem('logged', 'true');
-    this.router.navigate(['/pages/dashboard']);
   }
 
   isLoggedIn() {

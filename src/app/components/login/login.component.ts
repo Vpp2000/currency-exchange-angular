@@ -4,6 +4,9 @@ import { MessageService } from 'primeng/api';
 import {LoginService} from "../../auth/services/login.service";
 import {AuthService} from "../../auth/services/auth.service";
 import {ILogin} from "../../auth/types/login.interface";
+import {ActivatedRoute, Router} from "@angular/router";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {IToken} from "../../auth/types/token.interface";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +20,9 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -33,26 +38,47 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async onSubmit() {
-    sessionStorage.removeItem('currentUser');
-    sessionStorage.removeItem('lastSession');
-    try {
-      this.loading = true;
-      const user = this.fg.value as ILogin;
-      const resultLogin = await this.loginService.login(user);
-      this.loading = false;
-      const token = resultLogin.data;
-      this.authService.loginSuccess(token as string);
-    } catch (err: any) {
-      this.showError(err.error.message);
-      this.loading = false;
+  onSubmit() {
+    this.loading = true;
+
+    const loginBody: ILogin = {
+      username: this.fg.get('username')?.value,
+      password: this.fg.get('password')?.value
     }
+
+     this.loginService.login(loginBody).subscribe((response: HttpResponse<IToken>) => {
+       this.loading = false;
+       this.authService.loginSuccess(response.body?.accessToken as string);
+       setTimeout(() => {
+         this.showSuccess("Login successful");
+       }, 3000)
+
+       this.router.navigate(['/dashboard']).then((a) => {
+       }).catch(e => {
+         console.log(`Error: ${e}`)
+       })
+     }, (error: HttpErrorResponse) => {
+       console.error('An error occurred', error);
+       this.loading = false;
+       this.showError("Something wrong happened");
+     })
   }
+
+  showSuccess(detail: any) {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: detail,
+      life: 2000
+    });
+  }
+
   showError(detail: any) {
     this.messageService.add({
       severity: 'error',
       summary: 'Error',
-      detail: detail
+      detail: detail,
+      life: 4000
     });
   }
 }

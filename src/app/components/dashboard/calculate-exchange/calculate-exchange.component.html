@@ -1,0 +1,36 @@
+<div class="container">
+  <h2>Currency Converter</h2>
+
+  <form [formGroup]="currencyForm" (ngSubmit)="convertCurrency()">
+    <div class="p-grid">
+      <div class="p-col-6 mb-4">
+        <label for="fromCurrency" class="mr-5">From Currency</label>
+        <p-dropdown id="fromCurrency" formControlName="fromCurrency" [options]="currencies"></p-dropdown>
+      </div>
+      <div class="p-col-6">
+        <label for="toCurrency" class="mr-5">To Currency</label>
+        <p-dropdown id="toCurrency" formControlName="toCurrency" [options]="currencies"></p-dropdown>
+      </div>
+    </div>
+
+    <div class="p-grid">
+      <div class="p-col-12">
+        <label for="amount" class="mr-5">Amount</label>
+        <input type="number" id="amount" formControlName="amount" />
+      </div>
+    </div>
+
+    <div class="p-grid">
+      <div class="p-col-12">
+        <p-button styleClass="w-full" label="Convert"  type="submit" [disabled]="currencyForm.invalid"></p-button>
+
+      </div>
+    </div>
+  </form>
+
+  <div class="p-grid" *ngIf="convertedValue">
+    <div class="p-col-12">
+      <h3>Converted Value: {{ convertedValue }}</h3>
+    </div>
+  </div>
+</div>
