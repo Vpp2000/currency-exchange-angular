@@ -17,6 +17,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import { RegisterComponent } from './components/register/register.component';
 import {DashboardModule} from "./components/dashboard/dashboard.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MessageService} from "primeng/api";
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     DashboardModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
