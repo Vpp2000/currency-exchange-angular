@@ -49,14 +49,13 @@ export class LoginComponent implements OnInit {
      this.loginService.login(loginBody).subscribe((response: HttpResponse<IToken>) => {
        this.loading = false;
        this.authService.loginSuccess(response.body?.accessToken as string);
+       this.showSuccess("Login successful");
        setTimeout(() => {
-         this.showSuccess("Login successful");
+         this.router.navigate(['/dashboard']).then((a) => {
+         }).catch(e => {
+           console.log(`Error: ${e}`)
+         })
        }, 3000)
-
-       this.router.navigate(['/dashboard']).then((a) => {
-       }).catch(e => {
-         console.log(`Error: ${e}`)
-       })
      }, (error: HttpErrorResponse) => {
        console.error('An error occurred', error);
        this.loading = false;

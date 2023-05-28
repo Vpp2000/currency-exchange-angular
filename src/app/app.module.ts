@@ -18,11 +18,13 @@ import { RegisterComponent } from './components/register/register.component';
 import {DashboardModule} from "./components/dashboard/dashboard.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MessageService} from "primeng/api";
+import {AccessComponent} from "./@prime-ng/components/access/access.component";
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AccessComponent
   ],
   imports: [
     BrowserModule,

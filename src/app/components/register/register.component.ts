@@ -43,13 +43,15 @@ export class RegisterComponent implements OnInit{
     this.registerService.registerUser(payload).subscribe(
       (response) => {
         const data = response.body!;
+        this.showSuccess("Successfully registered")
+
         setTimeout(() => {
-          this.showSuccess("Successfully registered")
+          this.router.navigate(['/login']).then((a) => {
+          }).catch(e => {
+            this.showError("Something went wrong on routing")
+          })
         }, 3000)
-        this.router.navigate(['/login']).then((a) => {
-        }).catch(e => {
-          this.showError("Something went wrong on routing")
-        })
+
       },
       (error) => {
         this.showError("Something went wrong on registration")

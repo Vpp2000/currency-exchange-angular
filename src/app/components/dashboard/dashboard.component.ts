@@ -11,11 +11,11 @@ export class DashboardComponent {
       label: 'Currency calculation',
       icon: 'pi pi-calculator',
       routerLink: ["calculate"]
-    },
-    {
+    }
+    /*{
       label: 'Currency info',
       icon: 'pi pi-money-bill',
       routerLink: ["currency"]
-    }
+    }*/
   ];
 }
